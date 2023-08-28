@@ -4,7 +4,7 @@ import { View, Card, Text, Button, Toast } from "react-native-ui-lib";
 import FontAwesomeIcons from "@expo/vector-icons/FontAwesome5";
 import { Basic } from "unsplash-js/dist/methods/photos/types";
 import DimmerMessage from "components/DimmerMessage/DimmerMessage";
-import useDownload from "../../hooks/useDownload";
+import useDownload from "hooks/useDownload";
 
 type PhotoDetailsProps = {
   route: { params: Basic };
@@ -13,7 +13,7 @@ type PhotoDetailsProps = {
 const PhotoDetailsPage = ({ route }: PhotoDetailsProps) => {
   const image = route.params;
   const [toastIsVisible, setToastIsVisible] = useState(false);
-  const { download, openFile, status } = useDownload(image.urls.raw, () =>
+  const { download, status } = useDownload(image.urls.raw, () =>
     setToastIsVisible(true)
   );
 
@@ -26,7 +26,7 @@ const PhotoDetailsPage = ({ route }: PhotoDetailsProps) => {
       style={{ flex: 1, alignSelf: "stretch" }}
     >
       <Toast
-        action={{ label: "Open photo", onPress: openFile }}
+        action={{ label: "Close", onPress: () => setToastIsVisible(false) }}
         message="Photo saved on the device"
         onDismiss={() => setToastIsVisible(false)}
         position="bottom"
